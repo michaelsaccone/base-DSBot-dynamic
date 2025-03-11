@@ -1,13 +1,17 @@
-import {ICommand} from "../../ICommand.ts";
-import {Client, EmbedBuilder, Interaction, Message, MessageFlags} from "discord.js";
+import {BotCommand} from "../../ICommand.ts";
+import {Client, EmbedBuilder, Interaction, MessageFlags} from "discord.js";
 import User from "../../../models/user.ts";
+import DSCommand from "../../inputCommand.decorator.ts";
 
-const connectionCheckCommand: ICommand = {
+
+@DSCommand({
     name: "apeyron-check",
-    responseFlag: MessageFlags.Ephemeral,
-    description: "Controlla se il tuo account è correttamente connesso!",
+    description: "Controlla lo status di connessione del tuo account",
+    responseFlag: MessageFlags.Ephemeral
+})
+class ConnectionCheckCommand implements BotCommand {
 
-    async execute(client: Client, interaction: Interaction, message: string, age: number) {
+    async execute(client: Client, interaction: Interaction, message: string, badacomelafuma: number) {
 
         const user = await User.findOne({'discordInfos.id': interaction.user.id});
 
@@ -31,9 +35,9 @@ const connectionCheckCommand: ICommand = {
         }
 
         return response;
-    },
-
+    }
 
 }
 
-export default connectionCheckCommand;
+//  TODO Make Orchestator that instances all classes as singleton and reads their value
+export default new ConnectionCheckCommand();
