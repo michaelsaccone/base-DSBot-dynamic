@@ -4,8 +4,8 @@ import {
     CommandInteraction,
     Events,
     GatewayIntentBits,
-    Interaction,
-    MessageFlags,
+    Interaction, InteractionReplyOptions,
+    MessageFlags, MessagePayload,
     Partials,
     REST
 } from "discord.js";
@@ -62,12 +62,15 @@ export async function handleSlashCommand(client: Client, interaction: ChatInputC
 
     console.log("Passing arguments to slashCommand", args)
 
-    const embedResult = await slashCommand.execute(client, interaction, ...args);
+    const result = await slashCommand.execute(client, interaction, ...args);
 
-    await interaction.reply({
-        embeds: [embedResult],
+    const response: InteractionReplyOptions = {
         flags: slashCommand.responseFlag
-    })
+    }
+    if (typeof result === "string") response.content = result;
+    else response.embeds = [result]
+
+    await interaction.reply(response);
 };
 
 export function startBot() {
@@ -85,7 +88,7 @@ export function startBot() {
         if (!interaction.isChatInputCommand()) return;
 
         console.log("RECEIVED MESSAGE")
-        console.log(interaction.options.getString('messaggio'))
+        console.log(interaction.options.getString('message'))
 
         if (interaction.isCommand()) {
             await handleSlashCommand(client, interaction);

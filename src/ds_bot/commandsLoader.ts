@@ -49,6 +49,8 @@ export default async function loadCommands(): Promise<ICommand[]> {
 
             const execute = instance['execute'];
 
+            const instanceMethod = instance.execute.bind(instance);
+
             const commandParametersDescriptions =
                 Reflect.getMetadata("parameter:description", Object.getPrototypeOf(instance)) || {}
 
@@ -59,6 +61,7 @@ export default async function loadCommands(): Promise<ICommand[]> {
 
             for (const key of Object.keys(commandParametersDescriptions)) {
                 //  Key is the parameter index of the method
+                // @ts-ignore
                 params[key].description = commandParametersDescriptions[key];
             }
 
@@ -69,7 +72,7 @@ export default async function loadCommands(): Promise<ICommand[]> {
                 name: commandConfiguration.name,
                 description: commandConfiguration.description,
                 responseFlag: commandConfiguration.responseFlag,
-                execute: execute,
+                execute: instanceMethod,
                 parameters: params.slice(2) //  remove first two params,
             })
 

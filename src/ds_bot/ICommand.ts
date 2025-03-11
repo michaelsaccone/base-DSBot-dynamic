@@ -16,7 +16,7 @@ interface CommandConfiguration {
 }
 
 interface BotCommandExecutor {
-    execute: (client: Client, interaction: ChatInputCommandInteraction, ...args: any[]) => Promise<APIEmbed | EmbedBuilder>;
+    execute: (client: Client, interaction: ChatInputCommandInteraction, ...args: any[]) => Promise<APIEmbed | EmbedBuilder | string>;
 }
 
 interface CommandParameter {

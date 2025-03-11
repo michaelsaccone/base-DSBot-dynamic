@@ -9,19 +9,21 @@ import {ChatInputCommandInteraction, Client, type CommandInteraction, ComponentB
 })
 class EchoCommand implements BotCommandExecutor {
 
+    public readonly test: string;
+
+    constructor() {
+        this.test = "CIAOOONE, il test dev'essere letto da comando"
+    }
+
     async execute(
         client: Client,
         interaction: ChatInputCommandInteraction,
         @DSParam("Il messaggio per l'AI")
         messaggio: string) {
 
-        let response = new EmbedBuilder()
+        console.log("Test is ", this.test);
 
-        response
-            .setTitle("APEYRON AI")
-            .setDescription(messaggio)
-
-        return response
+        return messaggio
     }
 
 }
