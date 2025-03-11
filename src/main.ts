@@ -1,4 +1,8 @@
-import loadCommands from "./ds_bot/classCommandsLoader.ts";
+import {startBot} from "./ds_bot/bot.service.ts";
+import {connectDB} from "./utils/mongodb.ts";
 
 
-loadCommands();
+await connectDB();
+
+startBot()
+

@@ -1,17 +1,24 @@
-import {BotCommand} from "../../ICommand.ts";
-import {Client, EmbedBuilder, Interaction, MessageFlags} from "discord.js";
+import {BotCommandExecutor} from "../../ICommand.ts";
+import {
+    ChatInputCommandInteraction,
+    Client,
+    CommandInteraction,
+    EmbedBuilder,
+    Interaction,
+    MessageFlags
+} from "discord.js";
 import User from "../../../models/user.ts";
-import DSCommand from "../../inputCommand.decorator.ts";
+import DSCommand, {BotExecutor} from "../../inputCommand.decorator.ts";
 
 
 @DSCommand({
     name: "apeyron-check",
     description: "Controlla lo status di connessione del tuo account",
-    responseFlag: MessageFlags.Ephemeral
+    responseFlag: undefined
 })
-class ConnectionCheckCommand implements BotCommand {
+class ConnectionCheckCommand implements BotCommandExecutor {
 
-    async execute(client: Client, interaction: Interaction, message: string, badacomelafuma: number) {
+    async execute(client: Client, interaction: ChatInputCommandInteraction) {
 
         const user = await User.findOne({'discordInfos.id': interaction.user.id});
 
@@ -20,8 +27,13 @@ class ConnectionCheckCommand implements BotCommand {
         if (user) {
             response
                 .setTitle("✅ Account Trovato")
-                .setDescription("Il tuo account Minecraft associato è: **${user.nickname}**")
-                .setURL("https://mc-heads.net/avatar/${user.nickname}")
+                .setDescription(`Il tuo account Minecraft associato è: **${user.nickname}**`)
+                // .setImage(`https://mc-heads.net/avatar/${user.nickname}`)
+                .setColor("#e4e895")
+                .setThumbnail(`https://mc-heads.net/avatar/${user.nickname}`)
+                .setFooter({
+                    text: "Apeyron AI • Made with ❤️"
+                })
         } else {
             response
                 .setTitle("❌ Account non collegato!")

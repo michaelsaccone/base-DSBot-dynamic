@@ -1,19 +1,36 @@
-import type {APIEmbed, Client, EmbedBuilder, Interaction, MessageFlags} from "discord.js";
+import {
+    APIEmbed,
+    ChatInputApplicationCommandData, ChatInputCommandInteraction,
+    Client, CommandInteraction,
+    EmbedBuilder,
+    Interaction,
+    MessageFlags, SlashCommandBuilder
+} from "discord.js";
 //  Represents a discord command
 
 
 interface CommandConfiguration {
     name: string;  // Name of the command, "hello" for "/hello"
     description: string;
-
-    responseFlag: MessageFlags;
-
+    responseFlag: MessageFlags.Ephemeral | MessageFlags.SuppressNotifications | undefined;
 }
 
-interface BotCommand {
-    execute: (client: Client, interaction: Interaction, ...args: any[]) => Promise<APIEmbed | EmbedBuilder>;
+interface BotCommandExecutor {
+    execute: (client: Client, interaction: ChatInputCommandInteraction, ...args: any[]) => Promise<APIEmbed | EmbedBuilder>;
 }
 
-interface ICommand extends CommandConfiguration, BotCommand {}
+interface CommandParameter {
+    name: string;
+    description?: string;
+    type: string;
+}
 
-export { CommandConfiguration, BotCommand, ICommand};
+interface ICommand extends CommandConfiguration, BotCommandExecutor {
+    parameters: CommandParameter[];
+}
+
+interface DSBotCommand extends ChatInputApplicationCommandData, ICommand {
+    builder: SlashCommandBuilder
+}
+
+export { CommandConfiguration, BotCommandExecutor, ICommand, DSBotCommand, CommandParameter };
