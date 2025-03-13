@@ -19,6 +19,7 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "@axarai/axar": "^0.0.6",
     "@langchain/community": "^0.3.34",
     "@langchain/core": "^0.3.42",
     "@langchain/langgraph": "^0.2.54",
