@@ -50,6 +50,17 @@ async function load_graph<T>(state: T): Promise<StateGraph<T>> {
             graph.addEdge(dep, id);
         }
 
+        /**
+         * TODO: rischioso, non automatizza tutto e
+         *          sembra essere un passo indietro rispetto all'astrazione dei nodi
+         *          perché bisogna definire sul nodo stesso il suo percorso e quindi non rimane indipendente.
+         *     Due soluzioni:
+         *     1. Creare un percorso standard con degli hook per agganciare i nodi dinamicamente ad un certo
+         *     punto del percorso (es. before_send_message, bootstrap, before_retrieval)
+         *     2. Creare una classe router che importa i nodi e configura il grafo in base al caso d'uso,
+         *     così da poter eventualmente configurare più grafi e creare strutture a sottografi
+         *     per applicazioni specifiche. In questo modo si possono astrarre anche i grafi stessi.
+        **/
         if(conditionalEdge)
             conditionalEdges.set(id, conditionalEdge);
         else for (const fol of followingNodes) {
@@ -59,9 +70,9 @@ async function load_graph<T>(state: T): Promise<StateGraph<T>> {
 
     }
 
-    conditionalEdges.forEach((conditionalEdge, nodeId) => {
-        graph.addConditionalEdges(nodeId, conditionalEdge);
-    })
+    // conditionalEdges.forEach((conditionalEdge, nodeId) => {
+    //     graph.addConditionalEdges(nodeId, conditionalEdge);
+    // })
 
     return graph;
 

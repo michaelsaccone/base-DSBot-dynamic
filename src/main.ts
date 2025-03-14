@@ -9,10 +9,10 @@ import { z } from "zod";
 // startBot()
 
 import { tool } from "@langchain/core/tools";
-import FractionSchema from "./ai_playground/schemas/Fraction.schema.ts";
+import FractionSchema from "./ai_playground/tools/schemas/Fraction.schema.ts";
 import {ChatOpenAI} from "@langchain/openai";
 import {StringOutputParser} from "@langchain/core/output_parsers";
-import SubscribeSchema from "./ai_playground/schemas/Subscribe.schema.ts";
+import SubscribeSchema from "./ai_playground/tools/schemas/Subscribe.schema.ts";
 import {getSchemaDef} from "@axarai/axar";
 import {BaseMessage, HumanMessage} from "@langchain/core/messages";
 import {START, StateGraph} from "@langchain/langgraph";
