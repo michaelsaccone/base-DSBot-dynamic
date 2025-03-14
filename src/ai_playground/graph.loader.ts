@@ -12,7 +12,7 @@ async function load_graph<T>(state: T): Promise<StateGraph<T>> {
 
     const graph = buildStateGraph<T>(state)
 
-    const foldersPath = path.join(__dirname, 'nodes');
+    const foldersPath = path.join(__dirname, 'class.class.nodes');
     const nodesFolder = (await fs.readdir(foldersPath))
         .filter(file => file.endsWith('node.ts'));
 

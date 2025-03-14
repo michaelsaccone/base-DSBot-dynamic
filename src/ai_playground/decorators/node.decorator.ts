@@ -1,5 +1,5 @@
 
-// Node Decorator to register nodes and dependencies
+// Node Decorator to register class.nodes and dependencies
 function GraphNode(config: {
     id: string;
     dependsOn?: string[];

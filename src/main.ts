@@ -67,10 +67,7 @@ const app = workflow.compile();
 
 const graph = await app.getGraphAsync();
 
-const blob = await graph.drawMermaidPng();
-const buffer = Buffer.from( await blob.arrayBuffer() );
 
-await fs.writeFile('graph.png', buffer);
 
 const finalState = await app.invoke({
     name: "Init name",
