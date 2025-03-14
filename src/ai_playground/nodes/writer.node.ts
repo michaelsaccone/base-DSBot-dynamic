@@ -8,14 +8,18 @@ export const WRITER_NODE = "writer";
 
 @GraphNode({
     id: WRITER_NODE,
-    dependsOn: [ START ]
+    dependsOn: [ START ],
+    conditionalEdge(state: {name: string}) {
+        if (state.name.includes("Attilio"))
+            return "message"
+        else return "comessage"
+    }
 })
-class WriterNode implements IGraphNode<TestMessageState> {
+class WriterNode implements IGraphNode<{ name: string }> {
 
-    async execute(state: TestMessageState): Promise<TestMessageState> {
+    async execute(state: { name: string }): Promise<{ name: string }> {
 
-        state.name = "Michael Saccone";
-        state.messages = [ new HumanMessage("FINE!") ]
+        state.name = "Attilio Gilardo";
 
         console.log("WRITER: STATE IS ")
         console.log(state)

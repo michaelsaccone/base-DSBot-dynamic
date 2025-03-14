@@ -73,7 +73,8 @@ const buffer = Buffer.from( await blob.arrayBuffer() );
 await fs.writeFile('graph.png', buffer);
 
 const finalState = await app.invoke({
-    messages: [new HumanMessage("what is the weather in sf")],
+    name: "Init name",
+    args: [ "initial args" ]
 })
 
 console.log("FINAL STATE: ", finalState)
