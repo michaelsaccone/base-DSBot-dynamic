@@ -7,12 +7,11 @@ import {BotCommandExecutor, CommandConfiguration, CommandParameter, ICommand} fr
 import {getFunctionParams} from "../utils/reflection.util.ts";
 
 
-export default async function loadCommands(): Promise<ICommand[]> {
+export default async function loadCommands(foldersPath: string): Promise<ICommand[]> {
 
-    const foldersPath = path.join(__dirname, 'commands');
+    console.log("LOADING COMMANDS IN ", foldersPath);
+
     const commandFolders = await fs.readdir(foldersPath);
-
-    console.log("Found folders", foldersPath);
 
     const commands: ICommand[] = [];
 
@@ -49,9 +48,6 @@ export default async function loadCommands(): Promise<ICommand[]> {
                 // @ts-ignore
                 params[key].description = commandParametersDescriptions[key];
             }
-
-            console.log("PARAMETERS FOR " + commandConfiguration.name);
-            console.log(params.slice(2))
 
             commands.push({
                 name: commandConfiguration.name,

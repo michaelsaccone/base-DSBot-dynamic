@@ -1,4 +1,3 @@
-import {BotCommandExecutor} from "../../ICommand.ts";
 import {
     ChatInputCommandInteraction,
     Client,
@@ -7,9 +6,9 @@ import {
     Interaction,
     MessageFlags
 } from "discord.js";
-import User from "../../../models/user.ts";
-import DSCommand, {BotExecutor} from "../../inputCommand.decorator.ts";
-
+import DSCommand from "../../ds_bot/inputCommand.decorator.ts";
+import {BotCommandExecutor} from "../../ds_bot/ICommand.ts";
+import User from "../../models/user.ts";
 
 @DSCommand({
     name: "apeyron-check",
@@ -20,7 +19,8 @@ class ConnectionCheckCommand implements BotCommandExecutor {
 
     async execute(client: Client, interaction: ChatInputCommandInteraction) {
 
-        const user = await User.findOne({'discordInfos.id': interaction.user.id});
+        const user = await
+            User.findOne({'discordInfos.id': interaction.user.id});
 
         let response = new EmbedBuilder()
 

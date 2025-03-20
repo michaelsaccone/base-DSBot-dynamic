@@ -1,8 +1,5 @@
-import loadCommands from "./commandsLoader.ts";
-
 import {
     ApplicationCommandOptionData,
-    ChatInputApplicationCommandData,
     ApplicationCommandOptionType,
     SlashCommandBuilder
 } from "discord.js";
@@ -27,8 +24,6 @@ async function registerCommands(commands: ICommand[]): Promise<{
 
         //  Registering parameters
         command.parameters.forEach((parameter, i) => {
-
-            console.log("Adding validator for ", parameter)
 
             let parameterType: ApplicationCommandOptionType;
 

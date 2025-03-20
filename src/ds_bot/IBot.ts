@@ -7,5 +7,4 @@ interface IBot {
 
     onReady: (client: Client) => Promise<void>;
 
-
 }

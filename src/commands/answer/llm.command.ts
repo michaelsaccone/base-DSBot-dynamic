@@ -1,10 +1,10 @@
 import { Client, ChatInputCommandInteraction, APIEmbed, EmbedBuilder } from "discord.js";
-import {BotCommandExecutor} from "../../ICommand.ts";
-import DSCommand from "../../inputCommand.decorator.ts";
 import { ChatOpenAI } from "@langchain/openai";
 import {StringOutputParser} from "@langchain/core/output_parsers";
 import {ChatPromptTemplate} from "@langchain/core/prompts";
 import {Runnable} from "@langchain/core/runnables";
+import DSCommand from "../../ds_bot/inputCommand.decorator.ts";
+import {BotCommandExecutor} from "../../ds_bot/ICommand.ts";
 
 @DSCommand({
     name: "ai",

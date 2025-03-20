@@ -1,6 +1,6 @@
-import {BotCommandExecutor} from "../../ICommand.ts";
-import DSCommand, {BotExecutor, DSParam} from "../../inputCommand.decorator.ts";
 import {ChatInputCommandInteraction, Client, type CommandInteraction, ComponentBuilder, EmbedBuilder} from "discord.js";
+import DSCommand, {DSParam} from "../../ds_bot/inputCommand.decorator.ts";
+import {BotCommandExecutor} from "../../ds_bot/ICommand.ts";
 
 @DSCommand({
     name: "apeyron-ai",
