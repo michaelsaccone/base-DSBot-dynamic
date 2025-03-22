@@ -6,9 +6,8 @@ import {
     Interaction,
     MessageFlags
 } from "discord.js";
-import DSCommand from "../../ds_bot/inputCommand.decorator.ts";
-import {BotCommandExecutor} from "../../ds_bot/ICommand.ts";
 import User from "../../models/user.ts";
+import {BotCommandExecutor, DSCommand} from "@apeyron-engineering/apeyron-ds-framework";
 
 @DSCommand({
     name: "apeyron-check",

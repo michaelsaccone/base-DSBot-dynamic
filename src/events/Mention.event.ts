@@ -1,10 +1,12 @@
-import {Message} from "discord.js";
-import {DSEvent} from "../ds_bot/event.decorator.ts";
-import {DSEventType, IMessageEvent} from "../ds_bot/IEvent.ts";
+import {AttachmentBuilder, Message, MessageFlags, VoiceBasedChannel} from "discord.js";
 import {ChatOpenAI} from "@langchain/openai";
 import {ChatPromptTemplate} from "@langchain/core/prompts";
 import {Runnable} from "@langchain/core/runnables";
 import {StringOutputParser} from "@langchain/core/output_parsers";
+import {DSEvent, DSEventType, IMessageEvent} from "@apeyron-engineering/apeyron-ds-framework";
+import path from "node:path";
+import {getAudio} from "../audio_ai/audio.service.ts";
+import { joinVoiceChannel, createAudioPlayer, createAudioResource, NoSubscriberBehavior } from "@discordjs/voice";
 
 @DSEvent(
     DSEventType.MENTION
@@ -40,7 +42,34 @@ class MentionEvent implements IMessageEvent {
 
         const answer: string = await this.chain.invoke({ message: message.content })
 
-        await message.reply(answer);
+        const audioPath = path.join(__dirname, 'temp.mp3')
+
+        await getAudio(answer, audioPath)
+
+        const channel = message.member!.voice.channel as VoiceBasedChannel;
+
+        const connection = joinVoiceChannel({
+            channelId: channel.id,
+            guildId: channel.guild.id,
+            adapterCreator: channel.guild.voiceAdapterCreator,
+            selfDeaf: false,
+        });
+
+        const player = createAudioPlayer({
+            behaviors: {
+                noSubscriber: NoSubscriberBehavior.Play,
+            },
+        });
+
+        const resource = createAudioResource(audioPath);
+        player.play(resource);
+        connection.subscribe(player);
+
+        await message.reply("🎵 Te lo dico in vocale!");
+        player.on("idle", () => {
+            connection.destroy();
+            console.log("Finished playing, leaving channel.");
+        });
 
     }
 
