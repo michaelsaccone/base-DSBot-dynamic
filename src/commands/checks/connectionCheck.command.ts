@@ -12,7 +12,7 @@ import {BotCommandExecutor, DSCommand} from "@apeyron-engineering/apeyron-ds-fra
 @DSCommand({
     name: "apeyron-check",
     description: "Controlla lo status di connessione del tuo account",
-    responseFlag: undefined
+    responseFlag: MessageFlags.Ephemeral
 })
 class ConnectionCheckCommand implements BotCommandExecutor {
 
